@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rohan — Web-weaver, Accra</title>
+<meta name="description" content="Websites woven by hand in Accra. The weave: Atlantic Catering, Glimmer Jewels, K's Korner, Bab Photography, Walk a Wheel.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --indigo:#191B2C; --indigo-2:#212439;
+  --cloth:#EFE7D2; --mist:#9B98AC;
+  --thread-g:#E0A32E; --thread-r:#C7482F; --thread-f:#3E8A63;
+  --hair:rgba(239,231,210,.12);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --disp:'Bricolage Grotesque',system-ui,sans-serif;
+  --body:'Newsreader',Georgia,serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);font-size:17px;line-height:1.7;
+  background:var(--indigo);color:var(--cloth);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+::selection{background:var(--thread-g);color:var(--indigo)}
+:focus-visible{outline:2px solid var(--thread-g);outline-offset:3px}
+.label{font-family:var(--disp);font-weight:600;font-size:11px;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--thread-g)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 40px}
+
+/* ---------- the loom band (signature) ---------- */
+.loom{position:fixed;top:0;left:0;right:0;z-index:70;height:6px;display:flex}
+.loom i{flex:1;transform:scaleX(0);transform-origin:left}
+.loom i:nth-child(1){background:var(--thread-g)}
+.loom i:nth-child(2){background:var(--thread-r)}
+.loom i:nth-child(3){background:var(--cloth)}
+.loom i:nth-child(4){background:var(--thread-f)}
+.loom i:nth-child(5){background:var(--thread-g)}
+.loaded .loom i{transition:transform 1.1s var(--ease);transform:scaleX(1)}
+.loaded .loom i:nth-child(2){transition-delay:.12s}
+.loaded .loom i:nth-child(3){transition-delay:.24s}
+.loaded .loom i:nth-child(4){transition-delay:.36s}
+.loaded .loom i:nth-child(5){transition-delay:.48s}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:6px;left:0;right:0;z-index:60;
+  transition:background .4s,border-color .4s}
+.nav.scrolled{background:rgba(25,27,44,.86);backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--hair)}
+.nav-in{max-width:1200px;margin:0 auto;padding:18px 40px;display:flex;
+  align-items:center;justify-content:space-between}
+.wordmark{font-family:var(--disp);font-weight:800;font-size:20px;display:flex;
+  align-items:center;gap:12px;letter-spacing:-.01em}
+.wordmark svg{width:26px;height:26px;stroke:var(--thread-g);fill:none;stroke-width:4}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a.txt{font-family:var(--disp);font-weight:600;font-size:12px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--mist);
+  border-bottom:1px dashed transparent;padding-bottom:3px;
+  transition:color .3s,border-color .3s}
+.nav-links a.txt:hover{color:var(--cloth);border-bottom:1px solid var(--thread-g)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:.18em;
+  text-transform:uppercase;padding:16px 30px;position:relative;overflow:hidden;
+  isolation:isolate;transition:color .35s}
+.btn::before{content:'';position:absolute;inset:0;z-index:-1;
+  transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.btn-gold{border:1px solid var(--thread-g);color:var(--thread-g)}
+.btn-gold::before{background:var(--thread-g)}
+.btn-gold:hover{color:var(--indigo)}
+.btn-gold:hover::before{transform:scaleX(1)}
+.btn-ghost{border:1px solid var(--hair);color:var(--cloth)}
+.btn-ghost:hover{border-color:var(--thread-g)}
+.nav .btn{padding:11px 20px}
+
+/* ---------- hero ---------- */
+.hero{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;
+  align-items:center;max-width:1200px;margin:0 auto;padding:150px 40px 90px}
+.hero .label{display:block;margin-bottom:26px}
+.hero h1{font-size:clamp(46px,7.2vw,104px);line-height:.98}
+.hero h1 .row{display:block;overflow:hidden}
+.hero h1 .row span{display:inline-block;transform:translateY(110%)}
+.loaded .hero h1 .row span{transition:transform 1s var(--ease);transform:none}
+.loaded .hero h1 .row:nth-child(2) span{transition-delay:.1s}
+.loaded .hero h1 .row:nth-child(3) span{transition-delay:.2s}
+.hero h1 em{font-style:normal;color:var(--thread-g)}
+.hero .role{font-family:var(--disp);font-weight:600;font-size:13px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--mist);
+  margin-top:30px;display:flex;align-items:center;gap:14px}
+.hero .role::before{content:'';width:44px;height:1px;background:var(--thread-r)}
+.hero p.lede{max-width:560px;color:var(--mist);font-size:19px;margin-top:22px}
+.hero-cta{display:flex;gap:16px;margin-top:42px;flex-wrap:wrap}
+.hero .fade{opacity:0;transform:translateY(18px)}
+.loaded .hero .fade{transition:opacity .9s var(--ease),transform .9s var(--ease);
+  opacity:1;transform:none}
+.loaded .hero .fade.d1{transition-delay:.45s}
+.loaded .hero .fade.d2{transition-delay:.6s}
+.loaded .hero .fade.d3{transition-delay:.75s}
+.loaded .hero .fade.d4{transition-delay:.9s}
+
+/* Ananse's web */
+.web-side{display:flex;flex-direction:column;align-items:center;gap:26px}
+.web-side svg{width:min(360px,80%);height:auto;overflow:visible}
+.web-side .spoke,.web-side .ringpath{fill:none;stroke:var(--thread-g);stroke-width:1.4;
+  stroke-linecap:round;opacity:.85}
+.web-side .ringpath.faint{stroke:var(--cloth);opacity:.28}
+.web-side .drawable{stroke-dasharray:var(--len);stroke-dashoffset:var(--len)}
+.loaded .web-side .drawable{transition:stroke-dashoffset 1.6s var(--ease);
+  transition-delay:calc(.5s + var(--d,0)*.12s);stroke-dashoffset:0}
+.web-side .hub{fill:var(--thread-r)}
+.aside{font-style:italic;color:var(--mist);font-size:15.5px;max-width:320px;
+  text-align:center;line-height:1.65}
+.aside b{color:var(--cloth);font-weight:500}
+
+/* ---------- ticker ---------- */
+.ticker{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  overflow:hidden;padding:16px 0;white-space:nowrap}
+.ticker-track{display:inline-flex;gap:56px;padding-right:56px;
+  animation:tick 30s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker span{font-family:var(--disp);font-weight:600;font-size:13px;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--mist);
+  display:inline-flex;align-items:center;gap:56px}
+.ticker span::after{content:'';width:8px;height:8px;background:var(--thread-g)}
+.ticker span:nth-child(3n+2)::after{background:var(--thread-r)}
+.ticker span:nth-child(3n)::after{background:var(--thread-f)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ---------- the weave ---------- */
+.weave{padding:150px 0 40px}
+.sec-head{margin-bottom:88px;max-width:720px}
+.sec-head h2{font-size:clamp(36px,4.6vw,64px);line-height:1.02;margin-top:20px}
+.sec-head h2 em{font-style:normal;color:var(--thread-g)}
+.sec-head p{color:var(--mist);margin-top:18px;max-width:540px}
+
+.strip{padding:78px 0 92px;position:relative}
+.seam{position:absolute;top:0;left:40px;right:40px;height:2px;
+  background:var(--tc,var(--thread-g));transform:scaleX(0);transform-origin:left}
+.strip.vis .seam{transition:transform 1.1s var(--ease);transform:scaleX(1)}
+.strip-head{display:flex;align-items:baseline;gap:22px;flex-wrap:wrap;margin-bottom:44px}
+.strip-num{font-family:var(--disp);font-weight:800;font-size:15px;color:var(--tc,var(--thread-g))}
+.strip-kind{font-family:var(--disp);font-weight:600;font-size:11px;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--mist)}
+.strip-yr{margin-left:auto;font-style:italic;color:var(--mist);font-size:15px}
+.strip-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:start}
+.strip h3{font-size:clamp(32px,3.8vw,54px);line-height:1.02}
+.strip .sub{font-style:italic;font-size:20px;color:var(--mist);margin:12px 0 20px}
+.strip .desc{color:var(--mist);max-width:560px;margin-bottom:30px}
+.mini-label{font-family:var(--disp);font-weight:600;font-size:10.5px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--tc,var(--thread-g));margin-bottom:12px;
+  display:flex;align-items:center;gap:12px}
+.mini-label::after{content:'';height:1px;flex:0 0 40px;background:var(--hair)}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.pill{font-family:var(--disp);font-weight:500;font-size:12px;letter-spacing:.06em;
+  padding:7px 14px;border:1px solid var(--hair);color:var(--mist)}
+.pill.hot{border-color:var(--tc,var(--thread-g));color:var(--cloth)}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:30px}
+.feat{background:var(--indigo-2);border-left:2px solid transparent;padding:16px 18px;
+  transition:border-color .35s}
+.feat:hover{border-left-color:var(--tc,var(--thread-g))}
+.feat h4{font-size:14px;font-weight:600;letter-spacing:0;margin-bottom:5px}
+.feat p{font-size:14px;color:var(--mist);line-height:1.55}
+.impact{display:flex;gap:48px;margin-bottom:34px;flex-wrap:wrap}
+.impact b{font-family:var(--disp);font-weight:800;font-size:30px;display:block;
+  line-height:1.1;color:var(--tc,var(--thread-g))}
+.impact small{font-family:var(--disp);font-weight:600;font-size:10.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--mist)}
+
+/* reveal children */
+.strip .rv{opacity:0;transform:translateY(26px)}
+.strip.vis .rv{transition:opacity .8s var(--ease),transform .8s var(--ease);
+  transition-delay:calc(var(--i,0)*80ms);opacity:1;transform:none}
+
+/* mockup plate */
+.mock-wrap{position:relative;display:flex;justify-content:center;perspective:1200px}
+.plate{position:relative;transform-style:preserve-3d;transition:transform .25s ease-out;
+  will-change:transform;width:100%;max-width:520px}
+.plate::before{content:'';position:absolute;inset:-12px;border:1px solid var(--hair);
+  transform:translateZ(-30px)}
+.tag{position:absolute;z-index:3;background:var(--indigo);border:1px solid var(--hair);
+  font-family:var(--disp);font-weight:600;font-size:10px;letter-spacing:.26em;
+  text-transform:uppercase;padding:9px 16px;transform:translateZ(40px)}
+.tag.tl{top:-16px;right:-12px;color:var(--tc,var(--thread-g));border-color:var(--tc,var(--thread-g))}
+.tag.bl{bottom:-16px;left:-12px;color:var(--mist)}
+.browser{width:100%;overflow:hidden;background:var(--indigo-2);border:1px solid var(--hair);
+  box-shadow:0 34px 80px rgba(0,0,0,.5);position:relative}
+.browser::after{content:'';position:absolute;top:0;bottom:0;left:-70%;width:45%;
+  background:linear-gradient(105deg,transparent,rgba(239,231,210,.09),transparent);
+  transform:skewX(-18deg);pointer-events:none}
+.strip.vis .browser::after{transition:left 1.2s var(--ease) .4s;left:150%}
+.b-bar{display:flex;align-items:center;gap:6px;padding:11px 16px;border-bottom:1px solid var(--hair)}
+.b-bar i{width:8px;height:8px;border-radius:50%;background:var(--indigo);border:1px solid var(--hair)}
+.b-url{flex:1;margin-left:10px;font-family:var(--disp);font-size:10px;color:var(--mist);
+  letter-spacing:.08em;background:var(--indigo);border:1px solid var(--hair);padding:5px 12px}
+.b-body{height:290px;position:relative;overflow:hidden}
+
+/* brand previews (each mimics the client's own site) */
+.pv{position:absolute;inset:0}
+.pv-atl{background:#0B1526}
+.pv-atl .phero{height:56%;background:linear-gradient(160deg,#0B1526 20%,#12294a 70%,#1b3a68);
+  padding:26px 24px;display:flex;flex-direction:column;justify-content:center}
+.pv-atl .pword{font-family:Georgia,serif;color:#F5EFE0;font-size:22px;letter-spacing:.3em}
+.pv-atl .psub{color:#C9A24B;font-size:8.5px;letter-spacing:.36em;margin-top:9px;font-family:var(--disp)}
+.pv-atl .pline{width:52px;height:1px;background:#C9A24B;margin-top:14px}
+.pv-atl .cards{display:flex;gap:10px;padding:16px 24px}
+.pv-atl .c{flex:1;height:66px;background:#12213d;border:1px solid #21355c;padding:10px}
+.pv-atl .c i{display:block;width:15px;height:15px;background:#C9A24B;opacity:.9;margin-bottom:9px}
+.pv-atl .c b{display:block;width:70%;height:4px;background:#3a507c}
+.pv-glm{background:#F7F1E8}
+.pv-glm .phero{height:44%;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;background:linear-gradient(180deg,#F7F1E8,#F1E6D6)}
+.pv-glm .pword{font-family:Georgia,serif;color:#4A3B2A;font-size:21px;letter-spacing:.26em}
+.pv-glm .psub{color:#A98D5F;font-size:8px;letter-spacing:.42em;margin-top:7px;font-family:var(--disp)}
+.pv-glm .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px 22px}
+.pv-glm .g{height:72px;background:#fff;box-shadow:0 4px 14px rgba(74,59,42,.08);
+  display:flex;align-items:center;justify-content:center}
+.pv-glm .g i{width:26px;height:26px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#E8D5AE,#C9A24B)}
+.pv-kk{background:#101418}
+.pv-kk .top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;
+  border-bottom:1px solid #232a31}
+.pv-kk .pword{color:#fff;font-family:var(--disp);font-size:13px;font-weight:600;letter-spacing:.08em}
+.pv-kk .cart{width:26px;height:26px;background:#F2B01E;position:relative}
+.pv-kk .cart::after{content:'168';position:absolute;top:-7px;right:-9px;background:#fff;
+  color:#101418;font-family:var(--disp);font-size:7px;font-weight:600;padding:2px 4px}
+.pv-kk .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;padding:14px 18px}
+.pv-kk .g{background:#1a2027;height:60px;padding:8px}
+.pv-kk .g i{display:block;height:25px;background:linear-gradient(135deg,#2b3540,#3d4a58);margin-bottom:7px}
+.pv-kk .g b{display:block;width:80%;height:4px;background:#33404d;margin-bottom:4px}
+.pv-kk .g s{display:block;width:40%;height:4px;background:#F2B01E}
+.pv-jb{background:#0A0A0A}
+.pv-jb .word{display:flex;align-items:center;justify-content:space-between;padding:14px 18px}
+.pv-jb .pword{color:#fff;font-family:var(--disp);font-size:11px;letter-spacing:.34em}
+.pv-jb .dot{width:7px;height:7px;border-radius:50%;background:#C6A35C}
+.pv-jb .grid{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr;gap:6px;
+  height:76%;padding:6px}
+.pv-jb .g{background:linear-gradient(135deg,#1c1c1c,#2e2e2e)}
+.pv-jb .g:first-child{grid-row:span 2;background:linear-gradient(150deg,#242424,#3b3b3b 60%,#171717)}
+.pv-ww{background:#F2F7F5}
+.pv-ww .top{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid #DCE8E3}
+.pv-ww .dotlogo{width:16px;height:16px;border-radius:50%;border:3px solid #1E6E5A}
+.pv-ww .pword{color:#1B3B33;font-family:var(--disp);font-size:11px;font-weight:600;letter-spacing:.1em}
+.pv-ww .panel{margin:14px 18px;background:#fff;border:1px solid #DCE8E3;padding:14px}
+.pv-ww .ph{width:46%;height:5px;background:#1B3B33;margin-bottom:12px}
+.pv-ww .bar{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.pv-ww .bar s{width:34px;height:4px;background:#C8D8D2;display:block}
+.pv-ww .bar i{flex:1;height:6px;background:#E4EEEA;position:relative;display:block}
+.pv-ww .bar i::after{content:'';position:absolute;left:0;top:0;bottom:0;background:#2E8C72;width:var(--w,60%)}
+.pv-ww .bar.warn i::after{background:#D9973B}
+
+/* ---------- services ---------- */
+.services{padding:150px 0}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);
+  border:1px solid var(--hair)}
+.svc{background:var(--indigo);padding:40px 28px;position:relative;transition:background .4s}
+.svc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--tc,var(--thread-g));transform:scaleX(0);transform-origin:left;
+  transition:transform .6s var(--ease)}
+.svc:hover{background:var(--indigo-2)}
+.svc:hover::before{transform:scaleX(1)}
+.svc .glyph{display:grid;grid-template-columns:repeat(3,7px);gap:3px;margin-bottom:28px}
+.svc .glyph i{height:7px;background:var(--tc,var(--thread-g));opacity:.9}
+.svc .glyph i:nth-child(2n){opacity:.35}
+.svc h3{font-size:21px;font-weight:600;margin-bottom:12px}
+.svc p{color:var(--mist);font-size:15px;line-height:1.65}
+
+/* ---------- CTA + footer ---------- */
+.cta{padding:170px 0;text-align:center;border-top:1px solid var(--hair)}
+.cta h2{font-size:clamp(42px,6.4vw,92px);line-height:1.02}
+.cta h2 em{font-style:normal;color:var(--thread-g)}
+.cta p{color:var(--mist);margin:26px auto 46px;max-width:480px}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.footer{border-top:1px solid var(--hair)}
+.footer-in{max-width:1200px;margin:0 auto;padding:28px 40px;display:flex;
+  align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;
+  font-family:var(--disp);font-weight:600;font-size:10.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mist)}
+.footer a{transition:color .3s}
+.footer a:hover{color:var(--thread-g)}
+.footer .strips{display:flex;gap:4px}
+.footer .strips i{width:16px;height:4px}
+.footer .strips i:nth-child(1){background:var(--thread-g)}
+.footer .strips i:nth-child(2){background:var(--thread-r)}
+.footer .strips i:nth-child(3){background:var(--thread-f)}
+
+/* scroll reveals (generic) */
+.reveal{opacity:0;transform:translateY(30px)}
+.reveal.vis{transition:opacity .9s var(--ease),transform .9s var(--ease);
+  transition-delay:calc(var(--i,0)*90ms);opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .hero h1 .row span,.hero .fade,.reveal,.strip .rv{opacity:1!important;transform:none!important}
+  .loom i,.strip .seam{transform:scaleX(1)!important}
+  .web-side .drawable{stroke-dashoffset:0!important}
+  .ticker-track{animation:none!important}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .wrap{padding:0 22px}
+  .nav-in{padding:14px 22px}
+  .nav-links a.txt{display:none}
+  .hero{grid-template-columns:1fr;padding:130px 22px 70px;gap:56px;min-height:0}
+  .web-side{order:2}
+  .strip-grid{grid-template-columns:1fr;gap:44px}
+  .mock-wrap{order:-1}
+  .tag.tl{right:0}.tag.bl{left:0}
+  .seam{left:22px;right:22px}
+  .weave{padding:100px 0 20px}
+  .services{padding:100px 0}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .feat-grid{grid-template-columns:1fr}
+  .impact{gap:30px}
+  .cta{padding:110px 0}
+  .footer-in{padding:22px}
+}
+@media (max-width:560px){
+  .svc-grid{grid-template-columns:1fr}
+  .hero p.lede{font-size:17px}
+  .strip .sub{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<div class="loom" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a class="wordmark" href="#top" aria-label="Rohan — home">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="20" fill="none"/>
+        <circle cx="24" cy="24" r="10" fill="none"/>
+        <path d="M24 4v40M4 24h40M9.9 9.9l28.2 28.2M38.1 9.9L9.9 38.1" fill="none" stroke-width="3"/>
+      </svg>
+      Rohan
+    </a>
+    <div class="nav-links">
+      <a class="txt" href="#work">The Weave</a>
+      <a class="txt" href="#services">Services</a>
+      <a class="btn btn-gold" href="#contact">Start a project</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div>
+    <span class="label fade d1">Accra, Ghana — Commissions open</span>
+    <h1 aria-label="Websites, woven by hand.">
+      <span class="row"><span>Websites,</span></span>
+      <span class="row"><span>woven</span></span>
+      <span class="row"><span><em>by hand.</em></span></span>
+    </h1>
+    <div class="role fade d2">Rohan — Web developer &amp; digital craftsman</div>
+    <p class="lede fade d3">I design and build luxury e-commerce, cinematic brand sites,
+    and custom web tools for businesses in Ghana that refuse to look ordinary —
+    every one designed, built, and shipped by one pair of hands.</p>
+    <div class="hero-cta fade d4">
+      <a class="btn btn-gold" href="#work">See the weave</a>
+      <a class="btn btn-ghost" href="https://wa.me/233556757128" target="_blank" rel="noopener">WhatsApp me</a>
+    </div>
+  </div>
+  <div class="web-side">
+    <svg viewBox="0 0 300 300" role="img" aria-label="Ananse Ntontan — the spider's web Adinkra symbol">
+      <g class="drawable spoke" style="--len:280;--d:0">
+        <path d="M150 10 V290"/>
+      </g>
+      <g class="drawable spoke" style="--len:280;--d:1">
+        <path d="M10 150 H290"/>
+      </g>
+      <g class="drawable spoke" style="--len:396;--d:2">
+        <path d="M51 51 L249 249"/>
+      </g>
+      <g class="drawable spoke" style="--len:396;--d:3">
+        <path d="M249 51 L51 249"/>
+      </g>
+      <circle class="drawable ringpath faint" style="--len:189;--d:2" cx="150" cy="150" r="30"/>
+      <circle class="drawable ringpath" style="--len:377;--d:3" cx="150" cy="150" r="60"/>
+      <circle class="drawable ringpath faint" style="--len:566;--d:4" cx="150" cy="150" r="90"/>
+      <circle class="drawable ringpath" style="--len:754;--d:5" cx="150" cy="150" r="120"/>
+      <circle class="drawable ringpath faint" style="--len:880;--d:6" cx="150" cy="150" r="140"/>
+      <circle class="hub" cx="150" cy="150" r="6"/>
+    </svg>
+    <p class="aside fade d4"><b>Ananse Ntontan</b> — the spider's web — is the Adinkra
+    symbol for wisdom and craft. In Akan stories, Ananse weaves webs.
+    In Accra, I weave websites.</p>
+  </div>
+</header>
+
+<!-- ================= TICKER ================= -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Atlantic Catering</span><span>Glimmer Jewels</span><span>K's Korner</span>
+    <span>Bab Photography</span><span>Walk a Wheel</span>
+    <span>Atlantic Catering</span><span>Glimmer Jewels</span><span>K's Korner</span>
+    <span>Bab Photography</span><span>Walk a Wheel</span>
+  </div>
+</div>
+
+<!-- ================= THE WEAVE ================= -->
+<section class="weave" id="work">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">The Weave — five strips, five clients</span>
+      <h2>Kente is woven strip by strip.<br><em>So is this.</em></h2>
+      <p>Each project below is one strip of cloth: a real business in Ghana,
+      a site designed and built end to end, and the seams to prove it.</p>
+    </div>
+  </div>
+
+  <!-- 01 · Atlantic -->
+  <article class="strip" style="--tc:var(--thread-g)">
+    <div class="seam"></div>
+    <div class="wrap">
+      <div class="strip-head rv" style="--i:0">
+        <span class="strip-num">Strip 01</span>
+        <span class="strip-kind">Corporate site · Design &amp; build, solo</span>
+        <span class="strip-yr">2026</span>
+      </div>
+      <div class="strip-grid">
+        <div>
+          <h3 class="rv" style="--i:1">Atlantic Catering &amp; Logistics</h3>
+          <p class="sub rv" style="--i:2">Corporate catering, elevated</p>
+          <p class="desc rv" style="--i:3">A cinematic corporate website for one of Accra's
+          catering and logistics companies — smooth section transitions, a services and
+          fleet showcase, and a streamlined quote-request flow, engineered to feel
+          premium on any connection.</p>
+          <div class="rv" style="--i:4">
+            <div class="mini-label">Technologies</div>
+            <div class="pills"><span class="pill hot">HTML / CSS / JS</span><span class="pill">Node.js variant</span><span class="pill">Hash routing</span><span class="pill">Custom animations</span></div>
+          </div>
+          <div class="rv" style="--i:5">
+            <div class="mini-label">Key features</div>
+            <div class="feat-grid">
+              <div class="feat"><h4>Cinematic motion</h4><p>Scroll-driven animations tuned to a smooth 60fps</p></div>
+              <div class="feat"><h4>Multi-page, one file</h4><p>Hash routing delivers a full site in a single deploy</p></div>
+              <div class="feat"><h4>Services &amp; fleet</h4><p>Structured showcase of catering and logistics capability</p></div>
+              <div class="feat"><h4>Quote requests</h4><p>A clear enquiry flow that turns visitors into leads</p></div>
+            </div>
+          </div>
+          <div class="rv" style="--i:6">
+            <div class="mini-label">Under the hood</div>
+            <div class="impact">
+              <div><b>1 file</b><small>Entire site</small></div>
+              <div><b>2</b><small>Architectures</small></div>
+              <div><b>60fps</b><small>Motion target</small></div>
+            </div>
+          </div>
+          <div class="rv" style="--i:7"><a class="btn btn-gold" href="https://atlanticcatering-gh.com" target="_blank" rel="noopener">View live site</a></div>
+        </div>
+        <div class="mock-wrap rv" style="--i:2">
+          <div class="plate">
+            <div class="tag tl">2026</div>
+            <div class="browser">
+              <div class="b-bar"><i></i><i></i><i></i><span class="b-url">atlanticcatering-gh.com</span></div>
+              <div class="b-body"><div class="pv pv-atl">
+                <div class="phero"><div class="pword">ATLANTIC</div><div class="psub">CATERING · LOGISTICS</div><div class="pline"></div></div>
+                <div class="cards"><div class="c"><i></i><b></b></div><div class="c"><i></i><b></b></div><div class="c"><i></i><b></b></div></div>
+              </div></div>
+            </div>
+            <div class="tag bl">Corporate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 02 · Glimmer -->
+  <article class="strip" style="--tc:var(--thread-r)">
+    <div class="seam"></div>
+    <div class="wrap">
+      <div class="strip-head rv" style="--i:0">
+        <span class="strip-num">Strip 02</span>
+        <span class="strip-kind">E-commerce · Design &amp; build, solo</span>
+        <span class="strip-yr">2026</span>
+      </div>
+      <div class="strip-grid">
+        <div>
+          <h3 class="rv" style="--i:1">Glimmer Jewels</h3>
+          <p class="sub rv" style="--i:2">A luxury jewellery storefront</p>
+          <p class="desc rv" style="--i:3">A boutique online store with the polish of an
+          international luxury house — custom logo integration, rich product photography
+          and video baked directly into the site, and a frictionless enquiry flow for orders.</p>
+          <div class="rv" style="--i:4">
+            <div class="mini-label">Technologies</div>
+            <div class="pills"><span class="pill hot">HTML / CSS / JS</span><span class="pill">Hash routing</span><span class="pill">Embedded media</span><span class="pill">FormSubmit</span></div>
+          </div>
+          <div class="rv" style="--i:5">
+            <div class="mini-label">Key features</div>
+            <div class="feat-grid">
+              <div class="feat"><h4>Luxury catalogue</h4><p>Editorial product pages that let each piece breathe</p></div>
+              <div class="feat"><h4>Media built in</h4><p>All photos and video embedded — nothing external to break</p></div>
+              <div class="feat"><h4>Order enquiries</h4><p>A contact flow wired straight to the owner's inbox</p></div>
+              <div class="feat"><h4>Brand identity</h4><p>Custom logo and typography carried through every page</p></div>
+            </div>
+          </div>
+          <div class="rv" style="--i:6">
+            <div class="mini-label">Under the hood</div>
+            <div class="impact">
+              <div><b>100%</b><small>Media embedded</small></div>
+              <div><b>0</b><small>Dependencies</small></div>
+              <div><b>24/7</b><small>Enquiries</small></div>
+            </div>
+          </div>
+          <div class="rv" style="--i:7"><a class="btn btn-gold" href="#contact">Request a walkthrough</a></div>
+        </div>
+        <div class="mock-wrap rv" style="--i:2">
+          <div class="plate">
+            <div class="tag tl">2026</div>
+            <div class="browser">
+              <div class="b-bar"><i></i><i></i><i></i><span class="b-url">glimmerjewels · storefront</span></div>
+              <div class="b-body"><div class="pv pv-glm">
+                <div class="phero"><div class="pword">GLIMMER</div><div class="psub">JEWELS</div></div>
+                <div class="grid"><div class="g"><i></i></div><div class="g"><i></i></div><div class="g"><i></i></div></div>
+              </div></div>
+            </div>
+            <div class="tag bl">E-commerce</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 03 · K's Korner -->
+  <article class="strip" style="--tc:var(--thread-f)">
+    <div class="seam"></div>
+    <div class="wrap">
+      <div class="strip-head rv" style="--i:0">
+        <span class="strip-num">Strip 03</span>
+        <span class="strip-kind">Retail store · Design &amp; build, solo</span>
+        <span class="strip-yr">2026</span>
+      </div>
+      <div class="strip-grid">
+        <div>
+          <h3 class="rv" style="--i:1">K's Korner</h3>
+          <p class="sub rv" style="--i:2">A full retail store in the browser</p>
+          <p class="desc rv" style="--i:3">A complete online shop with 168 products, real
+          product photography, and working cart functionality — proof that a serious
+          retail experience doesn't need a heavyweight platform behind it.</p>
+          <div class="rv" style="--i:4">
+            <div class="mini-label">Technologies</div>
+            <div class="pills"><span class="pill hot">HTML / CSS / JS</span><span class="pill">Cart logic</span><span class="pill">Embedded product photos</span></div>
+          </div>
+          <div class="rv" style="--i:5">
+            <div class="mini-label">Key features</div>
+            <div class="feat-grid">
+              <div class="feat"><h4>168-product catalogue</h4><p>Every item photographed, mapped, and priced correctly</p></div>
+              <div class="feat"><h4>Working cart</h4><p>Add, adjust, and check out without leaving the page</p></div>
+              <div class="feat"><h4>Mobile-first</h4><p>Built for how customers in Accra actually shop — on phones</p></div>
+              <div class="feat"><h4>Instant loading</h4><p>Single-file architecture, no database round trips</p></div>
+            </div>
+          </div>
+          <div class="rv" style="--i:6">
+            <div class="mini-label">Under the hood</div>
+            <div class="impact">
+              <div><b>168</b><small>Products</small></div>
+              <div><b>1 file</b><small>Full store</small></div>
+              <div><b>0</b><small>Databases</small></div>
+            </div>
+          </div>
+          <div class="rv" style="--i:7"><a class="btn btn-gold" href="#contact">Request a walkthrough</a></div>
+        </div>
+        <div class="mock-wrap rv" style="--i:2">
+          <div class="plate">
+            <div class="tag tl">2026</div>
+            <div class="browser">
+              <div class="b-bar"><i></i><i></i><i></i><span class="b-url">kskorner · store</span></div>
+              <div class="b-body"><div class="pv pv-kk">
+                <div class="top"><div class="pword">K'S KORNER</div><div class="cart"></div></div>
+                <div class="grid">
+                  <div class="g"><i></i><b></b><s></s></div><div class="g"><i></i><b></b><s></s></div>
+                  <div class="g"><i></i><b></b><s></s></div><div class="g"><i></i><b></b><s></s></div>
+                  <div class="g"><i></i><b></b><s></s></div><div class="g"><i></i><b></b><s></s></div>
+                  <div class="g"><i></i><b></b><s></s></div><div class="g"><i></i><b></b><s></s></div>
+                </div>
+              </div></div>
+            </div>
+            <div class="tag bl">Retail</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 04 · Bab Photography -->
+  <article class="strip" style="--tc:var(--thread-g)">
+    <div class="seam"></div>
+    <div class="wrap">
+      <div class="strip-head rv" style="--i:0">
+        <span class="strip-num">Strip 04</span>
+        <span class="strip-kind">Portfolio · Design &amp; build, solo</span>
+        <span class="strip-yr">2026</span>
+      </div>
+      <div class="strip-grid">
+        <div>
+          <h3 class="rv" style="--i:1">Bab Photography</h3>
+          <p class="sub rv" style="--i:2">A portfolio that sells the work</p>
+          <p class="desc rv" style="--i:3">A dark, image-first portfolio for photographer
+          Jonas Bab — full-bleed galleries that put the photographs centre stage, with a
+          booking flow designed to convert admirers into paying clients.</p>
+          <div class="rv" style="--i:4">
+            <div class="mini-label">Technologies</div>
+            <div class="pills"><span class="pill hot">HTML / CSS / JS</span><span class="pill">Gallery lightbox</span><span class="pill">Optimised images</span></div>
+          </div>
+          <div class="rv" style="--i:5">
+            <div class="mini-label">Key features</div>
+            <div class="feat-grid">
+              <div class="feat"><h4>Full-bleed galleries</h4><p>Edge-to-edge layouts that let the photography speak</p></div>
+              <div class="feat"><h4>Booking enquiries</h4><p>One tap from a gallery to a shoot enquiry</p></div>
+              <div class="feat"><h4>Fast on mobile</h4><p>Optimised loading so heavy imagery still feels light</p></div>
+              <div class="feat"><h4>Findable</h4><p>Clean structure and metadata, ready for search</p></div>
+            </div>
+          </div>
+          <div class="rv" style="--i:6">
+            <div class="mini-label">Under the hood</div>
+            <div class="impact">
+              <div><b>Full-bleed</b><small>Galleries</small></div>
+              <div><b>1-tap</b><small>Booking</small></div>
+              <div><b>100%</b><small>Mobile-first</small></div>
+            </div>
+          </div>
+          <div class="rv" style="--i:7"><a class="btn btn-gold" href="#contact">Request a walkthrough</a></div>
+        </div>
+        <div class="mock-wrap rv" style="--i:2">
+          <div class="plate">
+            <div class="tag tl">2026</div>
+            <div class="browser">
+              <div class="b-bar"><i></i><i></i><i></i><span class="b-url">bab photography · portfolio</span></div>
+              <div class="b-body"><div class="pv pv-jb">
+                <div class="word"><div class="pword">BAB&nbsp;PHOTOGRAPHY</div><div class="dot"></div></div>
+                <div class="grid"><div class="g"></div><div class="g"></div><div class="g"></div></div>
+              </div></div>
+            </div>
+            <div class="tag bl">Portfolio</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 05 · Walk a Wheel -->
+  <article class="strip" style="--tc:var(--thread-r)">
+    <div class="seam"></div>
+    <div class="wrap">
+      <div class="strip-head rv" style="--i:0">
+        <span class="strip-num">Strip 05</span>
+        <span class="strip-kind">Web app + site · Design &amp; build, solo</span>
+        <span class="strip-yr">2026</span>
+      </div>
+      <div class="strip-grid">
+        <div>
+          <h3 class="rv" style="--i:1">Walk a Wheel</h3>
+          <p class="sub rv" style="--i:2">Functional medicine platform &amp; blood analysis tool</p>
+          <p class="desc rv" style="--i:3">The most technical strip in the weave: a full
+          practitioner website paired with a custom Functional Blood Chemistry Analysis
+          tool that parses lab reports, evaluates 77 blood markers, and generates
+          branded, print-ready client reports.</p>
+          <div class="rv" style="--i:4">
+            <div class="mini-label">Technologies</div>
+            <div class="pills"><span class="pill hot">HTML / JS app</span><span class="pill">Python pipeline</span><span class="pill">PDF + OCR parsing</span><span class="pill">AES-256-GCM</span></div>
+          </div>
+          <div class="rv" style="--i:5">
+            <div class="mini-label">Key features</div>
+            <div class="feat-grid">
+              <div class="feat"><h4>77-marker analysis</h4><p>Functional ranges evaluated across a full blood panel</p></div>
+              <div class="feat"><h4>Report parsing</h4><p>Reads uploaded lab PDFs and scans via OCR automatically</p></div>
+              <div class="feat"><h4>Access control</h4><p>Encrypted activation gating protects the practitioner's tool</p></div>
+              <div class="feat"><h4>Print-ready reports</h4><p>Branded report headers with dedicated print modes</p></div>
+            </div>
+          </div>
+          <div class="rv" style="--i:6">
+            <div class="mini-label">Under the hood</div>
+            <div class="impact">
+              <div><b>77</b><small>Blood markers</small></div>
+              <div><b>PDF+OCR</b><small>Report input</small></div>
+              <div><b>AES-256</b><small>Access gating</small></div>
+            </div>
+          </div>
+          <div class="rv" style="--i:7"><a class="btn btn-gold" href="https://walkawheel.life" target="_blank" rel="noopener">View live site</a></div>
+        </div>
+        <div class="mock-wrap rv" style="--i:2">
+          <div class="plate">
+            <div class="tag tl">2026</div>
+            <div class="browser">
+              <div class="b-bar"><i></i><i></i><i></i><span class="b-url">walkawheel.life</span></div>
+              <div class="b-body"><div class="pv pv-ww">
+                <div class="top"><div class="dotlogo"></div><div class="pword">WALK A WHEEL · FBCA</div></div>
+                <div class="panel">
+                  <div class="ph"></div>
+                  <div class="bar"><s></s><i style="--w:72%"></i></div>
+                  <div class="bar warn"><s></s><i style="--w:38%"></i></div>
+                  <div class="bar"><s></s><i style="--w:85%"></i></div>
+                  <div class="bar"><s></s><i style="--w:56%"></i></div>
+                  <div class="bar warn"><s></s><i style="--w:30%"></i></div>
+                </div>
+              </div></div>
+            </div>
+            <div class="tag bl">Web app</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Services</span>
+      <h2>What I weave<br><em>for clients</em></h2>
+      <p>Every strip above was designed, built, and shipped by one person.
+      Here is what that can look like for your business.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc reveal" style="--i:0;--tc:var(--thread-g)">
+        <div class="glyph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <h3>Business websites</h3>
+        <p>Corporate and brand sites that make a small business look established — fast, modern, and built to convert.</p>
+      </div>
+      <div class="svc reveal" style="--i:1;--tc:var(--thread-r)">
+        <div class="glyph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <h3>Online stores</h3>
+        <p>Product catalogues and carts tailored to how Ghanaian customers shop — mobile-first, with local payment habits in mind.</p>
+      </div>
+      <div class="svc reveal" style="--i:2;--tc:var(--thread-f)">
+        <div class="glyph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <h3>Custom web tools</h3>
+        <p>Bespoke applications — from report analysers to internal tools — when off-the-shelf software doesn't fit.</p>
+      </div>
+      <div class="svc reveal" style="--i:3;--tc:var(--thread-g)">
+        <div class="glyph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <h3>Care &amp; maintenance</h3>
+        <p>Ongoing updates, content changes, and support retainers so your site keeps working as hard as you do.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta" id="contact">
+  <div class="wrap">
+    <span class="label reveal">Commissions open</span>
+    <h2 class="reveal" style="margin-top:20px;--i:1">Your business is<br><em>the next strip.</em></h2>
+    <p class="reveal" style="--i:2">Tell me what you do, and I'll show you what your website
+    could look like — no obligation, no agency overhead.</p>
+    <div class="cta-btns reveal" style="--i:3">
+      <a class="btn btn-gold" href="https://wa.me/233556757128" target="_blank" rel="noopener">WhatsApp me</a>
+      <a class="btn btn-ghost" href="mailto:rohans.2627@gmail.com">Send an email</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-in">
+    <span>© 2026 Rohan · Accra, Ghana</span>
+    <span class="strips" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span style="display:flex;gap:28px">
+      <a href="#work">The Weave</a><a href="#services">Services</a><a href="#contact">Contact</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+  /* load-in: loom band, hero lines, web draw */
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){ document.body.classList.add('loaded'); });
+  });
+
+  /* nav */
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function(){
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  }, {passive:true});
+
+  /* scroll reveals — generic + strips */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target); }
+    });
+  }, {threshold:.14});
+  document.querySelectorAll('.reveal,.strip').forEach(function(el){ io.observe(el); });
+
+  /* 3D tilt on mockup plates (pointer:fine only) */
+  if (fine && !reduced){
+    document.querySelectorAll('.mock-wrap').forEach(function(wrap){
+      var plate = wrap.querySelector('.plate');
+      wrap.addEventListener('mousemove', function(e){
+        var r = wrap.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - .5;
+        var py = (e.clientY - r.top) / r.height - .5;
+        plate.style.transform = 'rotateY(' + (px * 9) + 'deg) rotateX(' + (-py * 7) + 'deg)';
+      });
+      wrap.addEventListener('mouseleave', function(){
+        plate.style.transition = 'transform .8s cubic-bezier(.22,1,.36,1)';
+        plate.style.transform = 'rotateY(0) rotateX(0)';
+        setTimeout(function(){ plate.style.transition = 'transform .25s ease-out'; }, 800);
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>
