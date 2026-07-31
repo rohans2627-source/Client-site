@@ -72,6 +72,22 @@ stitches across on scroll.
   mockup plates keep a restrained 3D tilt (pointer:fine only).
 - `prefers-reduced-motion`: all of the above collapse to static, fully-visible states.
 
+## Interaction layer (final build)
+
+- **Preloader:** ~1s loom curtain — five thread columns descend, then the whole
+  overlay lifts to reveal the hero sequence. Skipped entirely under reduced motion.
+- **Custom cursor:** gold thread-dot with a lerped ring that expands over any link
+  or button. Pointer-fine devices only.
+- **Magnetic buttons:** CTAs lean toward the cursor and spring back on leave.
+- **Scroll progress:** a 2px gold thread under the loom band tracks reading position.
+- **Ananse's web:** ambient 90s rotation plus a soft mouse parallax in the hero.
+- **Count-up stats:** each strip's "under the hood" numbers count up when the strip
+  reveals.
+- **Mobile menu:** full-screen indigo overlay with oversized Bricolage links and both
+  contact CTAs; burger morphs to X, Escape closes, body scroll locks.
+- **Woven texture:** a 3% opacity thread-grid overlays the whole page.
+- **Footer clock:** live Accra (GMT) time — a studio signature.
+
 ## What carries over from the old site
 
 All real content: the five projects (Atlantic Catering, Glimmer Jewels, K's Korner,
