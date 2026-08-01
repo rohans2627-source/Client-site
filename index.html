@@ -336,7 +336,13 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .svc p{color:var(--mist);font-size:15px;line-height:1.65}
 
 /* ---------- CTA + footer ---------- */
-.cta{padding:170px 0;text-align:center;border-top:1px solid var(--hair)}
+.cta{padding:170px 0;text-align:center;border-top:1px solid var(--hair);
+  position:relative;overflow:hidden;isolation:isolate}
+.cta-bg{position:absolute;inset:0;z-index:-2;width:100%;height:100%;
+  object-fit:cover;object-position:center}
+.cta::before{content:'';position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,var(--indigo) 0%,rgba(25,27,44,.86) 30%,
+  rgba(25,27,44,.86) 70%,var(--indigo) 100%)}
 .cta h2{font-size:clamp(42px,6.4vw,92px);line-height:1.02}
 .cta h2 em{font-style:normal;color:var(--thread-g)}
 .cta p{color:var(--mist);margin:26px auto 46px;max-width:480px}
@@ -841,6 +847,8 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
 <!-- ================= CTA ================= -->
 <section class="cta" id="contact">
+  <img class="cta-bg" src="assets/weave.webp" alt="" loading="lazy"
+       width="1400" height="594" aria-hidden="true">
   <div class="wrap">
     <span class="label reveal">Commissions open</span>
     <h2 class="reveal" style="margin-top:20px;--i:1">Your business is<br><em>the next strip.</em></h2>
