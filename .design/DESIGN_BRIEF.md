@@ -1,96 +1,60 @@
-# Design Brief — Rohan portfolio redesign
+# Design Brief — Rohan portfolio (v3: Studio Noir)
 
-## Concept: Ananse's Loom
+Direction pivot per client: no cultural theming. **Professional, modern, cinematic —
+a high-end digital studio aesthetic where motion is the signature.**
 
-In Akan folklore, Ananse the spider is the keeper of stories and the weaver of webs.
-Rohan builds websites in Accra — he is, literally, a web-weaver. The redesign treats the
-portfolio as woven cloth: kente is woven in narrow strips sewn together, so the page is
-composed as **strips** — a woven selvedge band at the top of the page, project rows that
-read as strips of cloth, and thread-colored seams marking each project. The old site's
-generic "European luxury noir + gold" is replaced by something only this person in this
-city could own.
-
-- **Subject:** a solo web developer/craftsman in Accra selling premium builds to Ghanaian businesses
-- **Audience:** Ghanaian business owners deciding whether to commission a website
+- **Subject:** a solo web developer in Accra selling premium builds to business owners
 - **The page's single job:** get them to open WhatsApp or email
+- **Personality:** confident, precise, expensive. The animations do the talking.
 
 ## Aesthetic direction
 
-**Woven modernism.** Deep indigo-dyed ground (night cloth, not pure black), undyed-cotton
-ivory for text, and three thread colors from the kente loom — gold, scarlet, forest —
-used as structural seams, never as decoration. Flat, precise, zero border-radius on
-structure; the warmth comes from color and type, not softness.
+**Studio noir.** Near-black ink ground, soft-white type, one hot accent used sparingly
+(signal orange), and mono-spaced technical labels. Generous space, big type, rounded
+surfaces. No gradients-on-white, no SaaS card grids — hierarchy comes from scale and
+motion.
 
 ## Palette (CSS variables)
 
 ```css
---indigo:   #191B2C;  /* ground — indigo-dyed night cloth */
---indigo-2: #212439;  /* raised surface / cards */
---cloth:    #EFE7D2;  /* undyed cotton — primary text */
---thread-g: #E0A32E;  /* kente gold — primary accent, links, CTAs */
---thread-r: #C7482F;  /* scarlet thread — secondary seam */
---thread-f: #3E8A63;  /* forest thread — tertiary seam */
---mist:     #9B98AC;  /* muted text on indigo */
+--ink:    #0A0A0B;  /* ground */
+--panel:  #131316;  /* raised cards */
+--line:   rgba(245,245,243,.09);
+--white:  #F5F5F3;  /* primary text */
+--grey:   #8B8B94;  /* secondary text */
+--accent: #FF4D00;  /* signal orange — CTAs, highlights, cursor */
 ```
 
-Each of the five projects is assigned a seam color (rotating gold → scarlet → forest),
-so the work section reads as sewn strips of different cloths.
+## Typography (3 families)
 
-## Typography (2 families)
+- **Display: Syne** 700/800 — geometric, contemporary, slightly odd; huge headlines,
+  tight leading (0.95), -0.03em tracking.
+- **Body: Manrope** 400/500/600 — clean, professional prose.
+- **Technical: JetBrains Mono** — eyebrows, stats, numbers, the preloader counter.
+  Mono labels get a scramble-decode animation on reveal.
 
-- **Display: Bricolage Grotesque** (800/600) — chunky, warm, contemporary; carries the
-  headlines and the big numerals. Tight leading (0.95), slight negative tracking.
-- **Body: Newsreader** (400/500 + italics) — a refined text serif for prose and the
-  storytelling asides. Italic used for the Ananse aside and project subtitles.
-- Labels/eyebrows: Bricolage Grotesque 600 at 11px, letter-spaced caps (no third family).
+## Signature: the motion system
 
-Type scale: 12 / 15 / 18 / 24 / 34 / clamp(44→96) display.
+- **Preloader:** giant mono counter 000→100, then the curtain wipes up.
+- **Kinetic hero:** headline lines launch up with skew; an endless band of giant
+  outlined text scrolls behind the fold; a soft orange aurora drifts in the dark.
+- **Sticky-stack work:** each project is a full card that pins while the next one
+  slides over it — the covered card scales down and dims (the "deck of work" moment).
+- **Scramble labels:** mono eyebrows decode from random glyphs when they enter view.
+- **Custom cursor:** difference-blend dot + lagging ring; ring flares on links.
+- **Magnetic CTAs**, count-up stats, 3D-tilt browser mockups, client ticker,
+  nav that hides on scroll-down and returns on scroll-up.
+- All of it collapses to static under `prefers-reduced-motion`; touch devices skip
+  cursor/magnetic/tilt.
 
-## Spacing scale
+## Layout
 
-4 / 8 / 16 / 24 / 40 / 64 / 104 / 160. Section padding 160px desktop, 88px mobile.
-Content column max 1200px; text measure max 560px.
+Nav → hero (kinetic type + aurora + outlined marquee) → client ticker →
+Selected Work 01–05 (sticky stack) → Services (4 hover-glow cards) → CTA (giant
+headline, WhatsApp/email) → footer (live GMT clock).
 
-## Signature element
+## Content
 
-**The loom band + Ananse's web.** A five-strip woven band runs across the very top of
-the page (the selvedge), whose strips draw in on load like threads pulled across a loom.
-The hero carries a hand-drawn Ananse Ntontan (spider's-web Adinkra symbol — wisdom,
-craft) as an SVG that draws itself, with a one-line italic aside explaining it. Every
-section seam re-uses the thread motif: project rows open with a colored seam that
-stitches across on scroll.
-
-## Motion language
-
-- **Load:** loom band strips scale in left→right (staggered); web mark strokes draw; hero
-  lines rise with a clip-path wipe (cloth unrolling), not blur/fade.
-- **Scroll:** section seams stitch across (scaleX); content reveals with a short
-  translate + clip wipe; browser mockups get one sheen pass.
-- **Ticker:** a thin marquee strip of the five client names runs between hero and work,
-  in loom colors.
-- **Hover:** links underline with a dashed→solid "stitch"; CTAs fill with thread gold;
-  mockup plates keep a restrained 3D tilt (pointer:fine only).
-- `prefers-reduced-motion`: all of the above collapse to static, fully-visible states.
-
-## Interaction layer (final build)
-
-- **Preloader:** ~1s loom curtain — five thread columns descend, then the whole
-  overlay lifts to reveal the hero sequence. Skipped entirely under reduced motion.
-- **Custom cursor:** gold thread-dot with a lerped ring that expands over any link
-  or button. Pointer-fine devices only.
-- **Magnetic buttons:** CTAs lean toward the cursor and spring back on leave.
-- **Scroll progress:** a 2px gold thread under the loom band tracks reading position.
-- **Ananse's web:** ambient 90s rotation plus a soft mouse parallax in the hero.
-- **Count-up stats:** each strip's "under the hood" numbers count up when the strip
-  reveals.
-- **Mobile menu:** full-screen indigo overlay with oversized Bricolage links and both
-  contact CTAs; burger morphs to X, Escape closes, body scroll locks.
-- **Woven texture:** a 3% opacity thread-grid overlays the whole page.
-- **Footer clock:** live Accra (GMT) time — a studio signature.
-
-## What carries over from the old site
-
-All real content: the five projects (Atlantic Catering, Glimmer Jewels, K's Korner,
-Bab Photography, Walk a Wheel) with their tech pills, key features, stats and live
-links; the four services; WhatsApp (+233 55 675 7128) and email CTAs. The deck/slideshow
-is replaced by a scroll editorial — better on mobile, where his clients actually are.
+All real content carries over: five projects with tech pills, features, stats, live
+links; four services; WhatsApp +233 55 675 7128 and email. Location stays as a fact
+("Accra, GH" in the eyebrow and footer) — it's just no longer the theme.
